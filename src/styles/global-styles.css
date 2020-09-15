@@ -1,4 +1,8 @@
-@import-normalize;
+@import './resets.css';
+@import './screen-reader.css';
+@import './variables.css';
+
+/* @import-normalize; */
 
 body {
   margin: 0;
@@ -7,9 +11,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-}
-
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+  color: var(--grey-500);
+  background-color: var(--grey-100);
+  font-size: 1rem;
 }

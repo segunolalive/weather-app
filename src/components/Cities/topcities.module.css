@@ -1,0 +1,21 @@
+.section {
+  padding: 1rem 0;
+}
+
+@media (min-width: 768px) {
+  .section {
+    padding: 2rem 0;
+  }
+}
+
+.section h2 {
+  margin: 0;
+  padding-bottom: 1rem;
+}
+
+.grid {
+  display: grid;
+  width: 100%;
+  grid-gap: 1.5rem;
+  grid-template-columns: repeat(auto-fill, minmax(12.5rem, 1fr));
+}

@@ -26,6 +26,11 @@
   }
 }
 
+.header {
+  display: flex;
+  justify-content: center;
+}
+
 .footer {
   text-align: center;
   font-size: 0.875rem;

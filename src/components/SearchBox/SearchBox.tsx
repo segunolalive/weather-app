@@ -7,13 +7,14 @@ import { ReactComponent as SearchIcon } from 'assets/icons/search.svg'
 import style from './search-box.module.css'
 
 type Props = {
-  initialValue?: string
+  value?: string
+  labelText?: string
   searchFn: (text: string) => void
 }
 
 type changehandler = (event: React.ChangeEvent<HTMLInputElement>) => void
 
-export default function SearchBox({ initialValue = '', searchFn }: Props) {
+export default function SearchBox({ value = '', labelText = 'Search Cities', searchFn }: Props) {
   const onChange: changehandler = (event) => {
     searchFn(event.target.value)
   }
@@ -26,16 +27,16 @@ export default function SearchBox({ initialValue = '', searchFn }: Props) {
           focusable="false"
           aria-hidden="true"
         />
-        <SRText>Search for applicant</SRText>
+        <SRText>{labelText}</SRText>
       </label>
       <input
         type="text"
         inputMode="search"
-        defaultValue={initialValue}
+        value={value}
         id="search"
         onChange={onChange}
         className={style.searchInput}
-        placeholder="Search for applicant"
+        placeholder={labelText}
       />
     </div>
   )

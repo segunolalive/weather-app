@@ -6,7 +6,7 @@ import React, {
   MutableRefObject,
 } from 'react'
 
-import { REQUEST_STATUSES } from 'utils'
+import { REQUEST_STATUSES } from 'models'
 
 export function useData(url: string) {
   const [status, setStatus] = useState(REQUEST_STATUSES.IDLE)
@@ -48,5 +48,3 @@ export function useData(url: string) {
 
   return { status, data }
 }
-
-

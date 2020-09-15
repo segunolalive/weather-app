@@ -1,6 +1,17 @@
-export const REQUEST_STATUSES: Record<string, string> = {
-  IDLE: 'IDLE',
-  LOADING: 'LOADING',
-  SUCCESS: 'SUCCESS',
-  ERROR: 'ERROR',
-}
+export const LARGEST_CITIES: string[] = [
+  'Tokyo',
+  // 'Delhi',
+  // 'Shanghai',
+  // 'Sao Paulo',
+  // 'Mexico City',
+  // 'Cairo',
+  // 'Mumbai',
+  // 'Beijing',
+  // 'Dhaka',
+  // 'Osaka',
+  // 'New York',
+  // 'Karachi',
+  // 'Buenos Aires',
+  // 'Chongqing',
+  // 'Istanbul'
+]
