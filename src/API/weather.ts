@@ -20,10 +20,10 @@ export const getCurrentWeather = async (city: string): Promise<any> => {
   const id = shortid()
   let imageData: any = null
   try {
-    imageData = await getImage(city)
     const url = urlFromCity(city)
     const { data } = await axios(url)
     data.id = id
+    imageData = await getImage(data?.location?.name || '')
     data.image = imageData.results[0]
     return data
   } catch (error) {

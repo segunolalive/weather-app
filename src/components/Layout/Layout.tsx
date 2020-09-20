@@ -1,4 +1,5 @@
-import * as React from 'react'
+import React from 'react'
+import { Link } from 'react-router-dom'
 
 import Container from 'components/Container'
 
@@ -12,7 +13,9 @@ export default function Layout({ children }: Props) {
   return (
     <div className={style.page}>
       <Container>
-        <header className={style.header}>Weather App</header>
+        <header className={style.header}>
+          <Link to="/">Weather App</Link>
+        </header>
       </Container>
       <main className={style.main}>
         <Container className={style.container}>{children}</Container>

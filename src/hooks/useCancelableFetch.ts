@@ -8,7 +8,7 @@ import React, {
 
 import { REQUEST_STATUSES } from 'models'
 
-export function useData(url: string) {
+export function useCancelableFetch(url: string) {
   const [status, setStatus] = useState(REQUEST_STATUSES.IDLE)
   const [data, setData] = useState([])
   const abortRef: MutableRefObject<any> = useRef(null)

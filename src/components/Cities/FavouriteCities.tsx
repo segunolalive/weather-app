@@ -1,22 +1,25 @@
-import React, { useState, useEffect } from 'react'
-import { getWeathers } from 'API'
+import React, { useContext } from 'react'
 import CityPreview from 'components/CityPreview'
+import FavouritesContext from 'Contexts/FavouritesContext'
 import style from './topcities.module.css'
 
 export default function FavouriteCities() {
-  const [favouriteCities, setFavouriteCities] = useState([])
-
-  useEffect(() => {
-    getWeathers(favouriteCities).then(setFavouriteCities).catch(console.log)
-  }, [favouriteCities.length])
+  const { favouriteCitiesWeather, deleteFavourite } = useContext(
+    FavouritesContext
+  )
 
   return (
     <section className={style.section} aria-labelledby="favourites">
       <h2 id="favourites">Favourites</h2>
-      {favouriteCities.length ? (
+      {favouriteCitiesWeather.length ? (
         <div className={style.grid}>
-          {favouriteCities.map((weather, i) => (
-            <CityPreview {...weather} key={i} />
+          {favouriteCitiesWeather.map((data: any, i: number) => (
+            <CityPreview
+              data={data}
+              key={i}
+              onDelete={deleteFavourite}
+              isFavourite={true}
+            />
           ))}
         </div>
       ) : (

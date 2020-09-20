@@ -1,6 +1,5 @@
 import React, { createContext, useEffect, useState } from 'react'
 import { getWeathers } from 'API'
-import { FavouriteCities } from 'components/Cities'
 
 const defaultContext: any = {
   favourites: [],
@@ -18,26 +17,26 @@ type Props = {
 
 export function FavouritesProvider({ children }: Props) {
   const [favourites, setFavourites] = useState<any[]>([])
-  const [favouritesWeather, setFavouritesWeather] = useState<any[]>([])
+  const [favouriteCitiesWeather, setFavouriteCitiesWeather] = useState<any[]>([])
   useEffect(() => {
-    getWeathers(favourites).then(setFavouritesWeather).catch(console.log)
+    getWeathers(favourites).then(setFavouriteCitiesWeather).catch(console.log)
   }, [favourites.length])
 
   const deleteFavourite = (city: any) => {
     setFavourites((favourites) =>
-      favourites.filter((favourite) => favourite !== city)
+      favourites.filter((favourite) => favourite !== city.location.name)
     )
   }
   const addFavourite = (city: any) =>
-    setFavourites((favourites) => [...favourites, city.current.name])
+    setFavourites((favourites) => [...favourites, city.location.name])
 
   return (
     <Provider
-      value={{ favourites: favouritesWeather, addFavourite, deleteFavourite }}
+      value={{ favourites, favouriteCitiesWeather, addFavourite, deleteFavourite }}
     >
       {children}
     </Provider>
   )
 }
 
-export default FavouriteCities
+export default FavouriteContext

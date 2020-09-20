@@ -1,14 +1,34 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+
 import Layout from 'components/Layout'
-import {TopCities, FavouriteCities} from 'components/Cities'
-import SearchBox from 'components/SearchBox'
-import { useData } from 'hooks'
+import { RouteComponentProps } from 'react-router-dom'
+import { TopCities, FavouriteCities } from 'components/Cities'
+import Search from 'components/Search'
+import { useLocation, useLocationWeather } from 'hooks'
 import { REQUEST_STATUSES } from 'models'
 
-export default function Home() {
+export default function Home({ history }: RouteComponentProps) {
+  const { status, weather } = useLocationWeather(useLocation())
+
+  useEffect(() => {
+    if (
+      status === REQUEST_STATUSES.SUCCESS &&
+      weather &&
+      weather?.success !== false
+    ) {
+      if (
+        window.confirm(
+          'Would you like to see the weather in your location?'
+        )
+      ) {
+        history.push(`/${weather.location.name}`, { weather })
+      }
+    }
+  }, [status, weather?.id])
+
   return (
     <Layout>
-      <SearchBox searchFn={console.log} />
+      <Search />
       <FavouriteCities />
       <TopCities />
     </Layout>
