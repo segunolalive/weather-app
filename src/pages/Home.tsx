@@ -11,15 +11,9 @@ export default function Home({ history }: RouteComponentProps) {
   const { status, weather } = useLocationWeather(useLocation())
 
   useEffect(() => {
-    if (
-      status === REQUEST_STATUSES.SUCCESS &&
-      weather &&
-      weather?.success !== false
-    ) {
+    if (status === REQUEST_STATUSES.SUCCESS && weather) {
       if (
-        window.confirm(
-          'Would you like to see the weather in your location?'
-        )
+        window.confirm('Would you like to see the weather in your location?')
       ) {
         history.push(`/${weather.location.name}`, { weather })
       }

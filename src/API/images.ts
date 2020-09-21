@@ -9,7 +9,6 @@ export const API = Axios.create({
 })
 
 export async function getImage(query: string, pageSize = 1) {
-  console.log({ data: query })
   try {
     const { data } = await API.get(
       `/?page=1&query=${query}&per_page=${pageSize}`

@@ -8,6 +8,8 @@
 .city img {
   width: 100%;
   border-radius: inherit;
+  height: 150px;
+  object-fit: cover;
 }
 
 .spaceApart {

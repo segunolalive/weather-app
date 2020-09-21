@@ -40,3 +40,11 @@
 .searchIcon {
   margin-right: 0.75rem;
 }
+
+.grid {
+  padding-top: 1rem;
+  display: grid;
+  width: 100%;
+  grid-gap: 1.5rem;
+  grid-template-columns: repeat(auto-fill, minmax(12.5rem, 1fr));
+}

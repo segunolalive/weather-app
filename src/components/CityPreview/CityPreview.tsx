@@ -19,22 +19,21 @@ export default function CityPreview({
   isFavourite = false,
   deletable = true,
 }: cityProp) {
-  const { current, location, image, success } = data
-
-  if (success === 'false') {
-    return null
-  }
+  const { current, location, image } = data
 
   return (
     <div className={style.city}>
-      <img src={image.urls?.thumb} alt="" />
+      <img src={image?.urls?.thumb} alt="" />
       <div className={style.spaceApart}>
         <h3>{location.name} </h3>
         {!isFavourite && <FavouriteButton data={data} onClick={onFavorite} />}
       </div>
       <p>Temp: {current.temperature}&deg;C</p>
       {deletable && <DeleteButton data={data} onClick={onDelete} />}
-      <Link to="/city" className={style.stretchedLink} />
+      <Link to={{
+        pathname: `${location.name}`,
+        state: data
+      }} className={style.stretchedLink} />
     </div>
   )
 }

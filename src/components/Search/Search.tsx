@@ -30,12 +30,8 @@ export default function Search({ labelText = 'Search Cities' }: Props) {
       setStatus(REQUEST_STATUSES.LOADING)
       getCurrentWeather(debouncedValue)
         .then((data) => {
-          if (data.success !== 'false') {
-            setWeather(data)
-            setStatus(REQUEST_STATUSES.SUCCESS)
-          } else {
-            setStatus(REQUEST_STATUSES.ERROR)
-          }
+          setWeather(data)
+          setStatus(REQUEST_STATUSES.SUCCESS)
         })
         .catch(() => setStatus(REQUEST_STATUSES.ERROR))
     }
@@ -68,13 +64,15 @@ export default function Search({ labelText = 'Search Cities' }: Props) {
       </div>
       <div>
         <Placeholder status={status} />
-        {status === REQUEST_STATUSES.SUCCESS && (
-          <CityPreview
-            data={weather}
-            onFavorite={addFavourite}
-            deletable={false}
-          />
-        )}
+        <div className={style.grid}>
+          {status === REQUEST_STATUSES.SUCCESS && (
+            <CityPreview
+              data={weather}
+              onFavorite={addFavourite}
+              deletable={false}
+            />
+          )}
+        </div>
       </div>
     </section>
   )

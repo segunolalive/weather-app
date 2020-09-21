@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { match, RouteComponentProps } from 'react-router-dom'
+import { match } from 'react-router-dom'
 import Layout from 'components/Layout'
 import { REQUEST_STATUSES } from 'models'
 import { getCurrentWeather } from 'API'
@@ -18,19 +18,13 @@ export default function City({ location, match }: cityProps) {
   const [weather, setWeather] = useState<any>(location?.state?.weather)
   const [status, setStatus] = useState<REQUEST_STATUSES>(REQUEST_STATUSES.IDLE)
 
-  console.log({ location })
-
   useEffect(() => {
     if (!weather) {
       setStatus(REQUEST_STATUSES.LOADING)
       getCurrentWeather(match?.params?.city || '')
         .then((data) => {
-          if (data.success !== 'false') {
-            setWeather(data)
-            setStatus(REQUEST_STATUSES.SUCCESS)
-          } else {
-            setStatus(REQUEST_STATUSES.ERROR)
-          }
+          setWeather(data)
+          setStatus(REQUEST_STATUSES.SUCCESS)
         })
         .catch(() => setStatus(REQUEST_STATUSES.ERROR))
     }

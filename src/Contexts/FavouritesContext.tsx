@@ -1,4 +1,4 @@
-import React, { createContext, useEffect, useState } from 'react'
+import React, { createContext, useEffect } from 'react'
 import { getWeathers } from 'API'
 import { useLocalStorage } from 'hooks'
 
@@ -17,38 +17,29 @@ type Props = {
 }
 
 export function FavouritesProvider({ children }: Props) {
-  const [favourites, setFavourites] = useState<any[]>([])
-  const [storedFavourites, setStoredFavourites]: any = useLocalStorage(
-    'favourites',
-    []
-  )
-  const [favouriteCitiesWeather, setFavouriteCitiesWeather] = useState<any[]>(
-    storedFavourites
-  )
+  const [favourites, setFavourites]: any = useLocalStorage('favourites', [])
   useEffect(() => {
-    getWeathers(favourites)
-      .then((weather) => {
-        if (weather.success !== 'false') {
-          setFavouriteCitiesWeather(weather)
-          setStoredFavourites(weather)
-        }
-      })
-      .catch(console.log)
-  }, [favourites.length])
+    if (favourites.length) {
+      getWeathers(favourites.map((item: any) => item.location.name))
+        .then(setFavourites)
+        .catch(console.log)
+    }
+  }, [])
 
   const deleteFavourite = (city: any) => {
-    setFavourites((favourites) =>
-      favourites.filter((favourite) => favourite !== city.location.name)
+    setFavourites((favourites: any) =>
+      favourites.filter(
+        (favourite: any) => favourite.location.name !== city.location.name
+      )
     )
   }
   const addFavourite = (city: any) =>
-    setFavourites((favourites) => [...favourites, city.location.name])
+    setFavourites((favourites: any) => [...favourites, city])
 
   return (
     <Provider
       value={{
         favourites,
-        favouriteCitiesWeather,
         addFavourite,
         deleteFavourite,
       }}
