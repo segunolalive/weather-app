@@ -10,8 +10,14 @@ import Placeholder from 'components/Placeholder'
 import { useLocalStorage } from 'hooks'
 
 export default function TopCities() {
-  const [topCities, setTopCities] = useState(LARGEST_CITIES)
-  const [citiesWeathers, setCitiesWeather]: any[] = useLocalStorage('topCities', [])
+  const [topCities, setTopCities]: any = useLocalStorage(
+    'topCities',
+    LARGEST_CITIES
+  )
+  const [citiesWeathers, setCitiesWeather]: any[] = useLocalStorage(
+    'topCitiesWeathers',
+    []
+  )
   const { addFavourite } = useContext(FavouritesContext)
   const [status, setStatus] = useState<REQUEST_STATUSES>(REQUEST_STATUSES.IDLE)
 
@@ -19,15 +25,17 @@ export default function TopCities() {
     setStatus(REQUEST_STATUSES.LOADING)
     getWeathers(topCities)
       .then((weathers) => {
-          setCitiesWeather(weathers)
-          setStatus(REQUEST_STATUSES.SUCCESS)
+        setCitiesWeather(weathers)
+        setStatus(REQUEST_STATUSES.SUCCESS)
       })
       .catch(() => setStatus(REQUEST_STATUSES.ERROR))
   }, [])
 
   const onDelete = (city: any) => {
-    setTopCities((cities) => cities.filter((curentCity) => curentCity !== city))
-    setCitiesWeather((cities:any) =>
+    setTopCities((cities: any) =>
+      cities.filter((curentCity: any) => curentCity !== city.location.name)
+    )
+    setCitiesWeather((cities: any) =>
       cities.filter((curentCity: any) => curentCity.id !== city.id)
     )
   }
@@ -38,7 +46,7 @@ export default function TopCities() {
       <Placeholder status={status} />
       {status === REQUEST_STATUSES.SUCCESS && (
         <div className={style.grid}>
-          {citiesWeathers.map((data:any, i:number) => (
+          {citiesWeathers.map((data: any, i: number) => (
             <CityPreview
               data={data}
               onFavorite={addFavourite}
