@@ -18,7 +18,6 @@ export default function TopCities() {
     'topCitiesWeathers',
     []
   )
-  const { addFavourite } = useContext(FavouritesContext)
   const [status, setStatus] = useState<REQUEST_STATUSES>(REQUEST_STATUSES.IDLE)
 
   useEffect(() => {
@@ -44,20 +43,29 @@ export default function TopCities() {
     )
   }
 
+  const { favourites, addFavourite } = useContext(FavouritesContext)
+  const favouriteCities = favourites.map((city: any) => city.location.name.toLowerCase())
+
   return (
     <section className={style.section}>
       <h2>Top Cities</h2>
       <Placeholder status={status} />
       {status === REQUEST_STATUSES.SUCCESS && (
         <div className={style.grid}>
-          {citiesWeathers.map((data: any, i: number) => (
-            <CityPreview
-              data={data}
-              onFavorite={addFavourite}
-              onDelete={onDelete}
-              key={i}
-            />
-          ))}
+          {citiesWeathers.map((data: any, i: number) => {
+            const isFavourite = favouriteCities.includes(
+              data.location.name.toLowerCase()
+            )
+            return (
+              <CityPreview
+                data={data}
+                isFavourite={isFavourite}
+                onFavorite={addFavourite}
+                onDelete={onDelete}
+                key={i}
+              />
+            )
+          })}
         </div>
       )}
     </section>
