@@ -30,10 +30,13 @@ export default function CityPreview({
       </div>
       <p>Temp: {current.temperature}&deg;C</p>
       {deletable && <DeleteButton data={data} onClick={onDelete} />}
-      <Link to={{
-        pathname: `${location.name}`,
-        state: data
-      }} className={style.stretchedLink} />
+      <Link
+        to={{
+          pathname: `${location.name}`,
+          state: data,
+        }}
+        className={style.stretchedLink}
+      />
     </div>
   )
 }

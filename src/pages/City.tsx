@@ -55,6 +55,12 @@ export default function City({ location, match }: cityProps) {
       </Layout>
     )
   } else {
-    return <Placeholder status={status} />
+    return (
+      <Layout>
+        <div className="text-center">
+          <Placeholder status={status} />
+        </div>
+      </Layout>
+    )
   }
 }

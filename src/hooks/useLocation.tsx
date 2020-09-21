@@ -28,7 +28,6 @@ export function useLocation() {
 export function useLocationWeather(location: locationType) {
   const [weather, setWeather] = useState<any>(null)
   const [status, setStatus] = useState(REQUEST_STATUSES.IDLE)
-  console.log('In useLocationWeather: ', { weather })
   let cityCoords
   useEffect(() => {
     if (location) {

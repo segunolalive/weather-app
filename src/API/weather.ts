@@ -22,24 +22,24 @@ export const getCurrentWeather = async (city: string): Promise<any> => {
   try {
     const url = urlFromCity(city)
     const { data } = await axios(url)
-    if (data.success === false) {
-      throw new Error('An API errror occured')
+    if (!data.current) {
+      throw new Error(data)
+    } else {
+      data.id = id
+      imageData = await getImage(data?.location?.name || '')
+      data.image = imageData.results[0]
+      return data
     }
-    data.id = id
-    imageData = await getImage(data?.location?.name || '')
-    data.image = imageData.results[0]
-    return data
   } catch (error) {
-    return error
+    throw new Error(error)
   }
 }
 
 export const getWeathers = async (cities: string[]): Promise<any> => {
   const weatherPromises = cities.map(getCurrentWeather)
   const settledPromises = await Promise.allSettled(weatherPromises)
-  console.log({ settledPromises })
   return settledPromises.reduce((acc: any, promise) => {
-    if (promise.status === 'fulfilled' && promise.value.success !== false) {
+    if (promise.status === 'fulfilled' && promise.value.current) {
       acc.push(promise.value)
     }
     return acc

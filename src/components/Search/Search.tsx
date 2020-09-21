@@ -63,9 +63,9 @@ export default function Search({ labelText = 'Search Cities' }: Props) {
         />
       </div>
       <div>
-        <Placeholder status={status} />
         <div className={style.grid}>
-          {status === REQUEST_STATUSES.SUCCESS && (
+          <Placeholder status={status} />
+          {status === REQUEST_STATUSES.SUCCESS && weather && (
             <CityPreview
               data={weather}
               onFavorite={addFavourite}
