@@ -26,6 +26,7 @@ export default function TopCities() {
     getWeathers(topCities)
       .then((weathers) => {
         setCitiesWeather(weathers)
+        setTopCities(weathers.map((weather: any) => weather.location.name))
         setStatus(REQUEST_STATUSES.SUCCESS)
       })
       .catch(() => setStatus(REQUEST_STATUSES.ERROR))
@@ -33,7 +34,10 @@ export default function TopCities() {
 
   const onDelete = (city: any) => {
     setTopCities((cities: any) =>
-      cities.filter((curentCity: any) => curentCity !== city.location.name)
+      cities.filter(
+        (curentCity: any) =>
+          curentCity.toLowerCase() !== city.location.name.toLowerCase()
+      )
     )
     setCitiesWeather((cities: any) =>
       cities.filter((curentCity: any) => curentCity.id !== city.id)
