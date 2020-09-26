@@ -8,8 +8,7 @@ import { useLocation, useLocationWeather } from 'hooks'
 import { REQUEST_STATUSES } from 'models'
 
 export default function Home({ history }: RouteComponentProps) {
-  const { status, weather } = useLocationWeather({ lat: 6, lon: 3 })
-  console.log({ status, id: weather?.id })
+  const { status, weather } = useLocationWeather(useLocation())
 
   useEffect(() => {
     if (status === REQUEST_STATUSES.SUCCESS && weather) {
