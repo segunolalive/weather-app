@@ -21,13 +21,13 @@ body {
 }
 
 .banner {
+  min-height: 200px;
   width: 100%;
   position: relative;
 }
 .banner img {
   width: 100%;
   height: auto;
-  min-height: 100px;
   max-height: 400px;
   object-fit: cover;
 }
