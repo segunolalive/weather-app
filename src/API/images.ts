@@ -1,6 +1,6 @@
 import Axios from 'axios'
 
-export const API = Axios.create({
+const API = Axios.create({
   baseURL: process.env.REACT_APP_PHOTOS_BASE_URL,
   timeout: 3000,
   headers: {

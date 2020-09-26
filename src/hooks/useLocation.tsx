@@ -3,8 +3,8 @@ import { getCurrentWeather } from 'API'
 import { REQUEST_STATUSES } from 'models'
 
 type locationStateType = {
-  latitude: number
-  longitude: number
+  lat: number
+  lon: number
 }
 
 type locationType = locationStateType | null
@@ -13,12 +13,15 @@ export function useLocation() {
   const [location, setLocation] = useState<locationType>(null)
   useEffect(() => {
     if ('geolocation' in navigator) {
-      navigator.geolocation.getCurrentPosition((position) => {
-        setLocation({
-          latitude: position.coords.latitude,
-          longitude: position.coords.longitude,
-        })
-      })
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          setLocation({
+            lat: position.coords.latitude,
+            lon: position.coords.longitude,
+          })
+        },
+        (error) => console.error(error)
+      )
     }
   }, [])
 
@@ -28,23 +31,21 @@ export function useLocation() {
 export function useLocationWeather(location: locationType) {
   const [weather, setWeather] = useState<any>(null)
   const [status, setStatus] = useState(REQUEST_STATUSES.IDLE)
-  let cityCoords
   useEffect(() => {
     if (location) {
-      cityCoords = `${location.latitude},${location.longitude}`
       setStatus(REQUEST_STATUSES.LOADING)
-      getCurrentWeather(cityCoords)
+      getCurrentWeather(location)
         .then((weatherInfo) => {
           setStatus(REQUEST_STATUSES.SUCCESS)
           setWeather(weatherInfo)
         })
         .catch(() => setStatus(REQUEST_STATUSES.ERROR))
     }
-  }, [location])
+  }, [location?.lat, location?.lon])
 
   return {
     status,
     weather,
-    coords: cityCoords,
+    coords: null,
   }
 }

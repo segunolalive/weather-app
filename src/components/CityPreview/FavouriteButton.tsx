@@ -8,7 +8,7 @@ type FavouriteProps = {
 }
 
 export default function FavouriteButton({ data, onClick }: FavouriteProps) {
-  const handleClick: clickHandlerType = (event) => onClick(data)
+  const handleClick: clickHandlerType = () => onClick(data)
   return (
     <button
       className={style.favorite}

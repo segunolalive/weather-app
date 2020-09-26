@@ -21,53 +21,33 @@ export default function TopCities() {
   const [status, setStatus] = useState<REQUEST_STATUSES>(REQUEST_STATUSES.IDLE)
 
   useEffect(() => {
+    const cities = topCities.map(({ name }: any) => name)
     setStatus(REQUEST_STATUSES.LOADING)
-    getWeathers(topCities)
-      .then((weathers) => {
-        setCitiesWeather(weathers)
-        setTopCities(weathers.map((weather: any) => weather.location.name))
-        setStatus(REQUEST_STATUSES.SUCCESS)
-      })
-      .catch(() => setStatus(REQUEST_STATUSES.ERROR))
+    getWeathers(cities).then((weathers) => {
+      setCitiesWeather(weathers)
+      setTopCities(weathers.map(({ id, name }: any) => ({ name, id })))
+      setStatus(REQUEST_STATUSES.SUCCESS)
+    })
   }, [])
 
-  const onDelete = (city: any) => {
+  const onDelete = (id: number) => {
     setTopCities((cities: any) =>
-      cities.filter(
-        (curentCity: any) =>
-          curentCity.toLowerCase() !== city.location.name.toLowerCase()
-      )
+      cities.filter((curentCity: any) => curentCity.id !== id)
     )
     setCitiesWeather((cities: any) =>
-      cities.filter((curentCity: any) => curentCity.id !== city.id)
+      cities.filter((curentCity: any) => curentCity.id !== id)
     )
   }
-
-  const { favourites, addFavourite } = useContext(FavouritesContext)
-  const favouriteCities = favourites.map((city: any) => city.location.name.toLowerCase())
 
   return (
     <section className={style.section}>
       <h2>Top Cities</h2>
+      <div className={style.grid}>
+        {citiesWeathers.map((data: any, i: number) => {
+          return <CityPreview data={data} onDelete={onDelete} key={i} />
+        })}
+      </div>
       <Placeholder status={status} />
-      {status === REQUEST_STATUSES.SUCCESS && (
-        <div className={style.grid}>
-          {citiesWeathers.map((data: any, i: number) => {
-            const isFavourite = favouriteCities.includes(
-              data.location.name.toLowerCase()
-            )
-            return (
-              <CityPreview
-                data={data}
-                isFavourite={isFavourite}
-                onFavorite={addFavourite}
-                onDelete={onDelete}
-                key={i}
-              />
-            )
-          })}
-        </div>
-      )}
     </section>
   )
 }

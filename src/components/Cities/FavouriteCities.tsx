@@ -11,18 +11,16 @@ export default function FavouriteCities() {
       <h2 id="favourites">Favourites</h2>
       {favourites.length ? (
         <div className={style.grid}>
-          {favourites
-            .map((data: any, i: number) => (
-              <CityPreview
-                data={data}
-                key={i}
-                onDelete={deleteFavourite}
-                isFavourite={true}
-              />
-            ))}
+          {favourites.map((data: any, i: number) => (
+            <CityPreview
+              data={data}
+              key={i}
+              onDelete={deleteFavourite}
+            />
+          ))}
         </div>
       ) : (
-        <p>You haven't added any favourite cities yet.</p>
+        <p>You have no favourite cities. Add some</p>
       )}
     </section>
   )

@@ -8,14 +8,15 @@ import { useLocation, useLocationWeather } from 'hooks'
 import { REQUEST_STATUSES } from 'models'
 
 export default function Home({ history }: RouteComponentProps) {
-  const { status, weather } = useLocationWeather(useLocation())
+  const { status, weather } = useLocationWeather({ lat: 6, lon: 3 })
+  console.log({ status, id: weather?.id })
 
   useEffect(() => {
     if (status === REQUEST_STATUSES.SUCCESS && weather) {
       if (
         window.confirm('Would you like to see the weather in your location?')
       ) {
-        history.push(`/${weather.location.name}`, { weather })
+        history.push(`/${weather.name}`, weather)
       }
     }
   }, [status, weather?.id])

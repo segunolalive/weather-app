@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from 'react'
+import React, { useEffect, useState } from 'react'
 import SRText from 'components/SRText'
 import { ReactComponent as SearchIcon } from 'assets/icons/search.svg'
 import { useDebouncedValue } from 'hooks'
@@ -8,7 +8,6 @@ import style from './search-box.module.css'
 import Placeholder from 'components/Placeholder'
 import { REQUEST_STATUSES } from 'models'
 import CityPreview from 'components/CityPreview'
-import FavouritesContext from 'Contexts/FavouritesContext'
 
 type Props = {
   labelText?: string
@@ -23,12 +22,10 @@ export default function Search({ labelText = 'Search Cities' }: Props) {
 
   const debouncedValue = useDebouncedValue(value, 500)
 
-  const { addFavourite } = useContext(FavouritesContext)
-
   useEffect(() => {
     if (debouncedValue) {
       setStatus(REQUEST_STATUSES.LOADING)
-      getCurrentWeather(debouncedValue)
+      getCurrentWeather({ q: debouncedValue })
         .then((data) => {
           setWeather(data)
           setStatus(REQUEST_STATUSES.SUCCESS)
@@ -63,15 +60,9 @@ export default function Search({ labelText = 'Search Cities' }: Props) {
         />
       </div>
       <div>
+        <Placeholder status={status} />
         <div className={style.grid}>
-          <Placeholder status={status} />
-          {status === REQUEST_STATUSES.SUCCESS && weather && (
-            <CityPreview
-              data={weather}
-              onFavorite={addFavourite}
-              deletable={false}
-            />
-          )}
+          {weather && <CityPreview data={weather} deleteable={false} />}
         </div>
       </div>
     </section>

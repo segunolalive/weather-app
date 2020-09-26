@@ -15,42 +15,81 @@ type cityProps = {
 }
 
 export default function City({ location, match }: cityProps) {
-  const [weather, setWeather] = useState<any>(location?.state?.weather)
+  const [weather, setWeather] = useState<any>(location?.state)
   const [status, setStatus] = useState<REQUEST_STATUSES>(REQUEST_STATUSES.IDLE)
 
   useEffect(() => {
     if (!weather) {
       setStatus(REQUEST_STATUSES.LOADING)
-      getCurrentWeather(match?.params?.city || '')
-        .then((data) => {
-          setWeather(data)
-          setStatus(REQUEST_STATUSES.SUCCESS)
-        })
-        .catch(() => setStatus(REQUEST_STATUSES.ERROR))
+      if (match?.params?.city) {
+        getCurrentWeather({ q: match?.params?.city })
+          .then((data) => {
+            setWeather(data)
+            setStatus(REQUEST_STATUSES.SUCCESS)
+          })
+          .catch(() => setStatus(REQUEST_STATUSES.ERROR))
+      }
     }
   }, [])
 
   if (weather) {
-    const { current, location: cityLocation } = weather
+    const {
+      image,
+      name,
+      main,
+      wind,
+      visibility,
+      clouds,
+      rain,
+      weather: cityWeather,
+    } = weather
     return (
       <Layout>
         <div className="text-center">
-          <h1>{cityLocation.name}</h1>
+          <div className="banner">
+            <img
+              src={image?.urls?.regular}
+              alt=""
+              height="200px"
+              width="200px"
+            />
+            <h1>{name}</h1>
+          </div>
           <h2>Temperature</h2>
-          <p>Description: {current.weather_descriptions.join(', ')}</p>
-          <p>Temperature: {current.temperature}&deg;C </p>
-          <p>Feels Like: {current.feels_like}&deg;C </p>
+          <p>
+            Description: <strong>{cityWeather[0]?.description}</strong>{' '}
+          </p>
+          <p>
+            Temperature: <strong>{main.temp}&deg;C</strong>{' '}
+          </p>
+          <p>
+            Feels Like: <strong>{main.feels_like}&deg;C</strong>{' '}
+          </p>
           <h2>Wind</h2>
-          <p>Wind Direction: {current.wind_dir}</p>
-          <p>Wind Speed: {current.wind_speed} Km/hr</p>
-          <p>Wind Degree: {current.wind_degree}</p>
+          <p>
+            Wind Speed: <strong>{wind.speed}m/s</strong>{' '}
+          </p>
+          <p>
+            Wind Degree: <strong>{wind.deg}&deg;</strong>{' '}
+          </p>
           <h2>Others</h2>
-          <p>Pressure: {current.pressure}MB</p>
-          <p>Precipitation: {current.precipitation}mm</p>
-          <p>Humidity: {current.humidity}%</p>
-          <p>Cloudcover: {current.cloudcover}%</p>
-          <p>UV Index: {current.uv_index}</p>
-          <p>Visibility: {current.visibility} km</p>
+          <p>
+            Pressure: <strong>{main.pressure}hPa</strong>{' '}
+          </p>
+          {rain?.['1h'] && (
+            <p>
+              Rain (1hr): <strong>{rain['1h']}mm</strong>{' '}
+            </p>
+          )}
+          <p>
+            Humidity: <strong>{main.humidity}%</strong>{' '}
+          </p>
+          <p>
+            Cloudcover: <strong>{clouds.all}%</strong>{' '}
+          </p>
+          <p>
+            Visibility: <strong>{visibility} km</strong>{' '}
+          </p>
         </div>
       </Layout>
     )

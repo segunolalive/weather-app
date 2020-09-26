@@ -1,38 +1,46 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { Link } from 'react-router-dom'
+import FavouritesContext from 'Contexts/FavouritesContext'
 import DeleteButton from './DeleteButton'
 import FavouriteButton from './FavouriteButton'
 import style from './city-preview.module.css'
 
 type cityProp = {
   data: any
-  onFavorite?: (id: string) => void
   onDelete?: (city: any) => void
-  isFavourite?: boolean
-  deletable?: boolean
+  deleteable?: boolean
 }
 
 export default function CityPreview({
   data,
-  onFavorite = () => {},
   onDelete = () => {},
-  isFavourite = false,
-  deletable = true,
+  deleteable = true,
 }: cityProp) {
-  const { current, location, image } = data
+  const {
+    id,
+    name,
+    image,
+    main: { temp },
+  } = data
+
+  const { favourites, addFavourite } = useContext(FavouritesContext)
+
+  const isFavourite = favourites.some(
+    (favouriteCity: any) => favouriteCity.id === id
+  )
 
   return (
     <div className={style.city}>
-      <img src={image?.urls?.thumb} alt="" />
+      <img src={image?.urls?.small} alt="" />
       <div className={style.spaceApart}>
-        <h3>{location.name} </h3>
-        {!isFavourite && <FavouriteButton data={data} onClick={onFavorite} />}
+        <h3>{name} </h3>
+        {!isFavourite && <FavouriteButton data={data} onClick={addFavourite} />}
       </div>
-      <p>Temp: {current.temperature}&deg;C</p>
-      {deletable && <DeleteButton data={data} onClick={onDelete} />}
+      <p>Temp: {temp}&deg;C</p>
+      {deleteable && <DeleteButton id={data.id} onClick={onDelete} />}
       <Link
         to={{
-          pathname: `${location.name}`,
+          pathname: name,
           state: data,
         }}
         className={style.stretchedLink}
