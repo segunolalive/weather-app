@@ -1,9 +1,6 @@
-type city = {
-  name: string
-  id: number
-}
+import { topCityType } from 'types'
 
-export const LARGEST_CITIES: city[] = [
+export const LARGEST_CITIES: topCityType[] = [
   { name: 'Tokyo', id: 1850144 },
   { name: 'Delhi', id: 1273294 },
   { name: 'Shanghai', id: 1796236 },

@@ -1,9 +1,8 @@
-import React, { useState, useEffect, useContext } from 'react'
+import React, { useState, useEffect } from 'react'
 import { LARGEST_CITIES } from 'utils'
 import { getWeathers } from 'API'
 import CityPreview from 'components/CityPreview'
-import FavouritesContext from 'Contexts/FavouritesContext'
-import { REQUEST_STATUSES } from 'models'
+import { REQUEST_STATUSES } from 'types'
 
 import style from './topcities.module.css'
 import Placeholder from 'components/Placeholder'

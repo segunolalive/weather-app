@@ -2,6 +2,7 @@ import qs from 'qs'
 import axios from 'axios'
 
 import { getImage } from './images'
+import { cityWeatherType } from "types";
 
 const BASE_URL = process.env.REACT_APP_WEATHER_API_URL
 const ACCESS_KEY = process.env.REACT_APP_WEATHER_API_ACCESS_KEY
@@ -23,7 +24,7 @@ export const makeQerySting = (config: config): string => {
   return BASE_URL + '?' + query
 }
 
-export const getCurrentWeather = async (config: config): Promise<any> => {
+export const getCurrentWeather = async (config: config): Promise<cityWeatherType> => {
   let imageData: any = null
   try {
     const url = makeQerySting(config)
@@ -36,16 +37,16 @@ export const getCurrentWeather = async (config: config): Promise<any> => {
   }
 }
 
-export const getWeathers = async (cities: string[]): Promise<any> => {
+export const getWeathers = async (cities: string[]): Promise<cityWeatherType[]> => {
   const mappedCities = cities.map((city) => ({ q: city }))
   const weatherPromises = mappedCities.map(getCurrentWeather)
   const settledPromises = await Promise.allSettled(weatherPromises)
   return Promise.resolve(
-    settledPromises.reduce((acc: any, promise) => {
+    settledPromises.reduce((acc, promise) => {
       if (promise.status === 'fulfilled') {
         acc.push(promise.value)
       }
       return acc
-    }, [])
+    }, [] as cityWeatherType[])
   )
 }

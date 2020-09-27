@@ -1,13 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import { getCurrentWeather } from 'API'
-import { REQUEST_STATUSES } from 'models'
+import { cityWeatherType, REQUEST_STATUSES } from 'types'
+import { coordsType } from 'types';
 
-type locationStateType = {
-  lat: number
-  lon: number
-}
-
-type locationType = locationStateType | null
+type locationType = coordsType | null
 
 export function useLocation() {
   const [location, setLocation] = useState<locationType>(null)
@@ -29,7 +25,7 @@ export function useLocation() {
 }
 
 export function useLocationWeather(location: locationType) {
-  const [weather, setWeather] = useState<any>(null)
+  const [weather, setWeather] = useState<cityWeatherType| null>(null)
   const [status, setStatus] = useState(REQUEST_STATUSES.IDLE)
   useEffect(() => {
     if (location) {

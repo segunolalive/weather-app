@@ -1,11 +1,18 @@
 import React, { createContext, useEffect } from 'react'
 import { getWeathers } from 'API'
 import { useLocalStorage } from 'hooks'
+import { cityWeatherType } from 'types'
 
-const defaultContext: any = {
+type favouriteContextType = {
+  favourites: cityWeatherType[]
+  deleteFavourite: (id: number) => void
+  addFavourite: (city: cityWeatherType) => void
+}
+
+const defaultContext: favouriteContextType = {
   favourites: [],
-  deleteFavourite: (id: number): void => {},
-  addFavourite: (city: any): void => {},
+  deleteFavourite: (id) => {},
+  addFavourite: (city) => {},
 }
 
 const FavouriteContext = createContext(defaultContext)
@@ -20,19 +27,19 @@ export function FavouritesProvider({ children }: Props) {
   const [favourites, setFavourites]: any = useLocalStorage('favourites', [])
   useEffect(() => {
     if (favourites.length) {
-      getWeathers(favourites.map((item: any) => item.name))
+      getWeathers(favourites.map((item: cityWeatherType) => item.name))
         .then(setFavourites)
         .catch(console.log)
     }
   }, [])
 
   const deleteFavourite = (id: number) => {
-    setFavourites((favourites: any) =>
-      favourites.filter((favourite: any) => favourite.id !== id)
+    setFavourites((favourites: cityWeatherType[]) =>
+      favourites.filter((favourite: cityWeatherType) => favourite.id !== id)
     )
   }
-  const addFavourite = (city: any) =>
-    setFavourites((favourites: any) => [...favourites, city])
+  const addFavourite = (city: cityWeatherType) =>
+    setFavourites((favourites: cityWeatherType[]) => [...favourites, city])
 
   return (
     <Provider

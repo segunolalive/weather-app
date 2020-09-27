@@ -1,10 +1,10 @@
 import React from 'react'
 import style from './city-preview.module.css'
-import { clickHandlerType } from 'models/types'
+import { cityWeatherType, clickHandlerType } from 'types'
 
 type FavouriteProps = {
-  data: any
-  onClick: (data: string) => void
+  data: cityWeatherType
+  onClick: (data: cityWeatherType) => void
 }
 
 export default function FavouriteButton({ data, onClick }: FavouriteProps) {

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { match } from 'react-router-dom'
 import Layout from 'components/Layout'
-import { REQUEST_STATUSES } from 'models'
+import { REQUEST_STATUSES, cityWeatherType } from 'types'
 import { getCurrentWeather } from 'API'
 import Placeholder from 'components/Placeholder'
 
@@ -15,7 +15,7 @@ type cityProps = {
 }
 
 export default function City({ location, match }: cityProps) {
-  const [weather, setWeather] = useState<any>(location?.state)
+  const [weather, setWeather] = useState<cityWeatherType>(location?.state)
   const [status, setStatus] = useState<REQUEST_STATUSES>(REQUEST_STATUSES.IDLE)
 
   useEffect(() => {

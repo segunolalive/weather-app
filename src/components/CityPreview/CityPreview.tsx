@@ -4,10 +4,11 @@ import FavouritesContext from 'Contexts/FavouritesContext'
 import DeleteButton from './DeleteButton'
 import FavouriteButton from './FavouriteButton'
 import style from './city-preview.module.css'
+import { cityWeatherType } from 'types'
 
 type cityProp = {
-  data: any
-  onDelete?: (city: any) => void
+  data: cityWeatherType
+  onDelete?: (cityId: number) => void
   deleteable?: boolean
 }
 
@@ -26,7 +27,7 @@ export default function CityPreview({
   const { favourites, addFavourite } = useContext(FavouritesContext)
 
   const isFavourite = favourites.some(
-    (favouriteCity: any) => favouriteCity.id === id
+    (favouriteCity) => favouriteCity.id === id
   )
 
   return (

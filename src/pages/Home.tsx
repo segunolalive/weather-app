@@ -5,7 +5,7 @@ import { RouteComponentProps } from 'react-router-dom'
 import { TopCities, FavouriteCities } from 'components/Cities'
 import Search from 'components/Search'
 import { useLocation, useLocationWeather } from 'hooks'
-import { REQUEST_STATUSES } from 'models'
+import { REQUEST_STATUSES } from 'types'
 
 export default function Home({ history }: RouteComponentProps) {
   const { status, weather } = useLocationWeather(useLocation())

@@ -1,6 +1,6 @@
 import React from 'react'
 import style from './city-preview.module.css'
-import { clickHandlerType } from 'models/types'
+import { clickHandlerType } from 'types'
 
 type DeleteProps = {
   id: number

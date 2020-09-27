@@ -6,7 +6,7 @@ import { getCurrentWeather } from 'API'
 
 import style from './search-box.module.css'
 import Placeholder from 'components/Placeholder'
-import { REQUEST_STATUSES } from 'models'
+import { cityWeatherType, REQUEST_STATUSES } from 'types'
 import CityPreview from 'components/CityPreview'
 
 type Props = {
@@ -17,8 +17,9 @@ type changehandler = (event: React.ChangeEvent<HTMLInputElement>) => void
 
 export default function Search({ labelText = 'Search Cities' }: Props) {
   const [value, setValue] = useState<string>('')
-  const [weather, setWeather] = useState<any>(null)
+  const [weather, setWeather] = useState<cityWeatherType | null>(null)
   const [status, setStatus] = useState<REQUEST_STATUSES>(REQUEST_STATUSES.IDLE)
+  const [error, setError] = useState<string>('')
 
   const debouncedValue = useDebouncedValue(value, 500)
 
@@ -30,7 +31,10 @@ export default function Search({ labelText = 'Search Cities' }: Props) {
           setWeather(data)
           setStatus(REQUEST_STATUSES.SUCCESS)
         })
-        .catch(() => setStatus(REQUEST_STATUSES.ERROR))
+        .catch((error) => {
+          setStatus(REQUEST_STATUSES.ERROR)
+          setError(error.message)
+        })
     }
   }, [debouncedValue])
 
@@ -60,7 +64,7 @@ export default function Search({ labelText = 'Search Cities' }: Props) {
         />
       </div>
       <div>
-        <Placeholder status={status} />
+        <Placeholder status={status} ErrorMessage={error} />
         <div className={style.grid}>
           {weather && <CityPreview data={weather} deleteable={false} />}
         </div>
