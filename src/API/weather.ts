@@ -2,7 +2,7 @@ import qs from 'qs'
 import axios from 'axios'
 
 import { getImage } from './images'
-import { cityWeatherType } from "types";
+import { cityWeatherType } from 'types'
 
 const BASE_URL = process.env.REACT_APP_WEATHER_API_URL
 const ACCESS_KEY = process.env.REACT_APP_WEATHER_API_ACCESS_KEY
@@ -24,20 +24,30 @@ export const makeQerySting = (config: config): string => {
   return BASE_URL + '?' + query
 }
 
-export const getCurrentWeather = async (config: config): Promise<cityWeatherType> => {
+
+export const getCurrentWeather = async (
+  config: config
+): Promise<cityWeatherType> => {
   let imageData: any = null
   try {
     const url = makeQerySting(config)
     const { data } = await axios(url)
     imageData = await getImage(data?.name || '')
-    data.image = imageData.results[0]
+    data.image = imageData?.results?.[0]
     return data
   } catch (error) {
-    throw new Error(error)
+    if (error?.response?.data?.message) {
+      throw new Error(error.response.data.message)
+    }
+    throw new Error(
+      error.message || `Oops! That's awkward. We messed up.`
+    )
   }
 }
 
-export const getWeathers = async (cities: string[]): Promise<cityWeatherType[]> => {
+export const getWeathers = async (
+  cities: string[]
+): Promise<cityWeatherType[]> => {
   const mappedCities = cities.map((city) => ({ q: city }))
   const weatherPromises = mappedCities.map(getCurrentWeather)
   const settledPromises = await Promise.allSettled(weatherPromises)
