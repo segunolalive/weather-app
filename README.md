@@ -1,4 +1,7 @@
 # Weather App
+[Live App](https://deep-weather.netlify.app/)
+
+A weather app built on OpenWeather Map and 
 
 ## Screenshots
 ![mobile](screenshots/mobile.png)
@@ -59,7 +62,7 @@ npm run build
 
 ## Disclaimer
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+- This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
