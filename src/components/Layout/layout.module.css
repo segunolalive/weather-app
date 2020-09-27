@@ -31,6 +31,10 @@
   justify-content: center;
 }
 
+.withInfo {
+  justify-content: space-between;
+}
+
 .header a {
   color: currentColor;
 }

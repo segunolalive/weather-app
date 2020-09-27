@@ -21,7 +21,7 @@ export default function Home({ history }: RouteComponentProps) {
   }, [status, weather?.id])
 
   return (
-    <Layout>
+    <Layout info={weather}>
       <Search />
       <FavouriteCities />
       <TopCities />
