@@ -2,7 +2,7 @@ import Axios from 'axios'
 
 const API = Axios.create({
   baseURL: process.env.REACT_APP_PHOTOS_BASE_URL,
-  timeout: 3000,
+  timeout: 10000,
   headers: {
     Authorization: `Client-ID ${process.env.REACT_APP_PHOTOS_ACCESS_KEY}`,
   },

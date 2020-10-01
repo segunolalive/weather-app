@@ -15,28 +15,3 @@ body {
   background-color: var(--grey-100);
   font-size: 1rem;
 }
-
-.text-center {
-  text-align: center;
-}
-
-.banner {
-  min-height: 200px;
-  width: 100%;
-  position: relative;
-}
-.banner img {
-  width: 100%;
-  height: auto;
-  max-height: 400px;
-  object-fit: cover;
-}
-
-.banner h1 {
-  font-size: 5rem;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  text-shadow: 0px 0px 7px var(--grey-100);
-}

@@ -1,27 +1,40 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+import React, { useEffect, } from 'react'
+import { Link, useHistory } from 'react-router-dom'
+import { useLocation, useLocationWeather } from 'hooks'
+import { REQUEST_STATUSES } from 'types'
 
 import Container from 'components/Container'
 
 import style from './layout.module.css'
-import { cityWeatherType } from 'types'
 
 type Props = {
-  info?: cityWeatherType | null
   children: React.ReactNode
 }
 
-export default function Layout({ info, children }: Props) {
+export default function Layout({ children }: Props) {
+  const { status, weather } = useLocationWeather(useLocation())
+  const history = useHistory()
+
+  useEffect(() => {
+    if (status === REQUEST_STATUSES.SUCCESS && weather) {
+      if (
+        window.confirm('Would you like to see the weather in your location?')
+      ) {
+        history.push(`/${weather.name}`, weather)
+      }
+    }
+  }, [status, weather?.id])
+
   return (
     <div className={style.page}>
       <Container>
-        <header className={`${style.header} ${info ? style.withInfo : ''}`}>
+        <header className={`${style.header} ${weather ? style.withInfo : ''}`}>
           <Link to="/">Weather App</Link>
-          {info && (
+          {weather && (
             <Link
               to={{
-                pathname: info.name,
-                state: info,
+                pathname: weather.name,
+                state: weather,
               }}
             >
               My Location
