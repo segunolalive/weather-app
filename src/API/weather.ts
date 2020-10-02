@@ -31,7 +31,7 @@ export const getCurrentWeather = async (
   let imageData: any = null
   try {
     const url = makeQuerySting(config)
-    const { data } = await axios(url)
+    const { data } = await axios(url.toLowerCase())
     imageData = await getImage(data?.name || '')
     data.image = imageData?.results?.[0]
     return data
