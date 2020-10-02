@@ -1,7 +1,7 @@
 import React, { createContext, useEffect } from 'react'
 import { getWeathers } from 'API'
 import { useLocalStorage } from 'hooks'
-import { cityWeatherType } from 'types'
+import { cityWeatherType, ContextProviderProps } from 'types'
 
 type favouriteContextType = {
   favourites: cityWeatherType[]
@@ -19,11 +19,7 @@ const FavouriteContext = createContext(defaultContext)
 
 const { Provider } = FavouriteContext
 
-type Props = {
-  children: React.ReactChild
-}
-
-export function FavouritesProvider({ children }: Props) {
+export function FavouritesProvider({ children }: ContextProviderProps) {
   const [favourites, setFavourites]: any = useLocalStorage('favourites', [])
   useEffect(() => {
     if (favourites.length) {

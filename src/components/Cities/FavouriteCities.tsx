@@ -1,6 +1,6 @@
 import React, { useContext } from 'react'
 import CityPreview from 'components/CityPreview'
-import FavouritesContext from 'Contexts/FavouritesContext'
+import { FavouritesContext } from 'Contexts'
 import style from './topcities.module.css'
 
 export default function FavouriteCities() {
@@ -12,11 +12,7 @@ export default function FavouriteCities() {
       {favourites.length ? (
         <div className={style.grid}>
           {favourites.map((favourite, i) => (
-            <CityPreview
-              data={favourite}
-              key={i}
-              onDelete={deleteFavourite}
-            />
+            <CityPreview data={favourite} key={i} onDelete={deleteFavourite} />
           ))}
         </div>
       ) : (

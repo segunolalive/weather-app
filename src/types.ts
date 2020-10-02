@@ -46,6 +46,7 @@ export type clickHandlerType = (
   event: React.MouseEvent<HTMLButtonElement>
 ) => void
 
+
 export enum REQUEST_STATUSES {
   IDLE,
   LOADING,
@@ -56,4 +57,13 @@ export enum REQUEST_STATUSES {
 export type topCityType = {
   name: string
   id: number
+}
+
+export type ContextProviderProps = {
+  children: React.ReactChild
+}
+
+export type noteType = {
+  id: number
+  text: string
 }

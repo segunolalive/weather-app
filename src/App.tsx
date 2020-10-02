@@ -1,6 +1,6 @@
 import React from 'react'
 import { BrowserRouter, Route, Switch } from 'react-router-dom'
-import { FavouritesProvider } from 'Contexts/FavouritesContext'
+import { FavouritesProvider, NotesProvider } from 'Contexts'
 
 import Home from 'pages/Home'
 import City from 'pages/City'
@@ -10,12 +10,14 @@ function App() {
   return (
     <BrowserRouter>
       <Layout>
-        <FavouritesProvider>
-          <Switch>
-            <Route path="/:city" component={City} />
-            <Route path="/" component={Home} exact />
-          </Switch>
-        </FavouritesProvider>
+        <NotesProvider>
+          <FavouritesProvider>
+            <Switch>
+              <Route path="/:city" component={City} />
+              <Route path="/" component={Home} exact />
+            </Switch>
+          </FavouritesProvider>
+        </NotesProvider>
       </Layout>
     </BrowserRouter>
   )

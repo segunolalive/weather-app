@@ -1,8 +1,9 @@
 import React, { useContext } from 'react'
 import { cityWeatherType, REQUEST_STATUSES } from 'types'
 import Placeholder from 'components/Placeholder'
-import FavouritesContext from 'Contexts/FavouritesContext'
+import { FavouritesContext, NotesContext } from 'Contexts'
 import FavouriteButton from 'components/CityPreview/FavouriteButton'
+import Note from 'components/Note'
 
 import style from './city-detail.module.css'
 
@@ -13,12 +14,14 @@ type CityDetailProps = {
 
 export default function CityDetail({ weatherInfo, status }: CityDetailProps) {
   const { favourites, addFavourite } = useContext(FavouritesContext)
+  const { notes, addNote } = useContext(NotesContext)
   const isFavourite = favourites.some(
     (favouriteCity) => favouriteCity.id === weatherInfo?.id
   )
 
   if (weatherInfo) {
     const {
+      id,
       image,
       name,
       main,
@@ -79,6 +82,7 @@ export default function CityDetail({ weatherInfo, status }: CityDetailProps) {
           <p>
             Visibility: <strong>{visibility} km</strong>{' '}
           </p>
+          <Note id={id} />
         </div>
       </section>
     )

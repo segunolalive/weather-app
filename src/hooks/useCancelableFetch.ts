@@ -30,11 +30,14 @@ export function useCancelableFetch<T>(url: string | null) {
             throw new Error(data?.message || 'Aww, snap! We messed up')
           }
           const jsonData = await response.json()
-
+          // if (jsonData.name) {
+          //   const imageData = await getImage(jsonData.name)
+          //   jsonData.image = imageData?.results?.[0]
+          // }
           setStatus(REQUEST_STATUSES.SUCCESS)
           setData(jsonData)
         } catch (error) {
-          console.log({error});
+          console.log({ error })
           if (!signal.aborted) {
             setStatus(REQUEST_STATUSES.ERROR)
             setError(error.message)

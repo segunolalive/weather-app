@@ -1,6 +1,6 @@
 import React, { useContext } from 'react'
 import { Link } from 'react-router-dom'
-import FavouritesContext from 'Contexts/FavouritesContext'
+import { FavouritesContext } from 'Contexts'
 import DeleteButton from './DeleteButton'
 import FavouriteButton from './FavouriteButton'
 import style from './city-preview.module.css'
