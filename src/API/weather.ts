@@ -14,7 +14,7 @@ type config = {
   lon?: number
 }
 
-export const makeQerySting = (config: config): string => {
+export const makeQuerySting = (config: config): string => {
   const query = qs.stringify({
     appid: ACCESS_KEY,
     ...config,
@@ -30,7 +30,7 @@ export const getCurrentWeather = async (
 ): Promise<cityWeatherType> => {
   let imageData: any = null
   try {
-    const url = makeQerySting(config)
+    const url = makeQuerySting(config)
     const { data } = await axios(url)
     imageData = await getImage(data?.name || '')
     data.image = imageData?.results?.[0]

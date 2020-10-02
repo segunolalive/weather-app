@@ -1,2 +1,2 @@
-export { getCurrentWeather, getWeathers } from './weather'
+export { getCurrentWeather, getWeathers, makeQuerySting } from './weather'
 export { getImage } from './images'

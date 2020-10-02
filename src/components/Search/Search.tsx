@@ -21,7 +21,7 @@ export default function Search({ labelText = 'Search Cities' }: Props) {
   const [status, setStatus] = useState<REQUEST_STATUSES>(REQUEST_STATUSES.IDLE)
   const [error, setError] = useState<string>('')
 
-  const debouncedValue = useDebouncedValue(value, 500)
+  const debouncedValue = useDebouncedValue(value, 1_000)
 
   useEffect(() => {
     if (debouncedValue) {
