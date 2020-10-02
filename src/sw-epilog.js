@@ -5,5 +5,5 @@ workbox.routing.registerRoute(
 
 workbox.routing.registerRoute(
   ({ request }) => request.url.match('api.'),
-  new workbox.strategies.NetworkFirst()
+  new workbox.strategies.CacheFirst()
 )

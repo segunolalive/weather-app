@@ -10,10 +10,9 @@ type noteProps = {
 }
 
 type changeHandlerType = (event: React.ChangeEvent<HTMLTextAreaElement>) => void
-type submitHandlerType = (event: React.FormEvent) => void
 
 export default function Note({ id }: noteProps) {
-  const { notes, addNote, deleteNote } = useContext(NotesContext)
+  const { notes, addNote } = useContext(NotesContext)
   const match = notes.find((note: noteType) => note.id === id)
   const [note, setNote] = useState(match?.text || '')
 
@@ -21,7 +20,7 @@ export default function Note({ id }: noteProps) {
     setNote(event.target.value)
   }
 
-  const debouncedValue = useDebouncedValue(note, 1_000)
+  const debouncedValue = useDebouncedValue(note, 500)
 
   useEffect(() => {
     addNote({ id, text: debouncedValue } as noteType)
